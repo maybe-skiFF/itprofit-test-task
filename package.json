@@ -44,7 +44,9 @@
     "webpack-merge": "^5.10.0"
   },
   "dependencies": {
+    "@types/inputmask": "^5.0.7",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "ajv": "^8.17.1"
+    "ajv": "^8.17.1",
+    "inputmask": "^5.0.9"
   }
 }
