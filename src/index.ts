@@ -1,3 +1,3 @@
-import './styles/index.module.scss';
+import './styles/index.scss';
 
 console.log('test');
