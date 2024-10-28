@@ -5,7 +5,8 @@ import { formValidation } from './utils/formValidation';
 
 document.addEventListener('DOMContentLoaded', () => {
   const feedBackForm = document.getElementById('feedBackForm') as HTMLFormElement;
-  feedBackForm.addEventListener('submit', (e) => {
+  const serverStatusMsg = document.querySelector('.server-status-msg') as HTMLParagraphElement;
+  feedBackForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const phoneInput = document.getElementById('phone') as HTMLInputElement;
@@ -28,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const formTextArea = feedBackForm.querySelector('textarea');
     formTextArea?.classList.remove('invalid-input');
 
+    serverStatusMsg.innerHTML = '';
+
     Object.keys(errors).forEach((error) => {
       const currFormInput = document.getElementById(error) as HTMLInputElement;
       if (currFormInput) {
@@ -41,6 +44,31 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    if (Object.keys(errors).length === 0) feedBackForm.submit();
+    if (Object.keys(errors).length === 0) {
+      const formData = new FormData(feedBackForm);
+
+      try {
+        const resp = await fetch('http://localhost:9090/api/registration', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!resp.ok) {
+          const errorData = await resp.json();
+          throw new Error(errorData.message);
+        }
+
+        const data = await resp.json();
+
+        if (data.status === 'success') {
+          serverStatusMsg.innerHTML = data.message;
+          feedBackForm.reset();
+        }
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          serverStatusMsg.innerHTML = error.message;
+        }
+      }
+    }
   });
 });
