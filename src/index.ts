@@ -3,6 +3,7 @@ import './styles/index.scss';
 import { clearFormErrors, displayErrors } from './utils/displayErrors';
 import { formSubmitHandler } from './utils/formSubmitHandler';
 import { formValidation } from './utils/formValidation';
+import { addHandlersToModal } from './utils/modalWindowHandler';
 import { phoneMask } from './utils/phoneMask';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,4 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
       await formSubmitHandler(formData, serverStatusMsg, feedBackForm);
     }
   });
+
+  const openModalBtn = document.querySelector('.modal-btn') as HTMLButtonElement;
+  const modalContainer = document.querySelector('.modal-container') as HTMLDivElement;
+  const closeModalBtn = document.querySelector('.modal-close-btn') as HTMLSpanElement;
+
+  addHandlersToModal(openModalBtn, closeModalBtn, modalContainer);
 });
