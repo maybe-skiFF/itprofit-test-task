@@ -1,8 +1,10 @@
+import { PATHS } from '../constants/PATHS';
+
 async function formSubmitHandler(formData: FormData, serverStatusMsg: HTMLParagraphElement, form: HTMLFormElement) {
   const statusServerItem = serverStatusMsg;
 
   try {
-    const resp = await fetch('http://localhost:9090/api/registration', {
+    const resp = await fetch(PATHS.baseURL, {
       method: 'POST',
       body: formData,
     });
