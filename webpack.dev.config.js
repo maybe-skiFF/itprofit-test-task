@@ -1,9 +1,12 @@
-const path = require('path');
+import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-module.exports = {
-  mode: 'development',
-  devtool: 'inline-source-map',
-  devServer: {
-    static: path.resolve(__dirname, './dist'),
-  },
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export const mode = 'development';
+export const devtool = 'inline-source-map';
+export const devServer = {
+  static: resolve(__dirname, './dist'),
 };
